@@ -10,7 +10,7 @@ public class SettingsButton : MonoBehaviour
     
     public void OpenSettings()
     {
-        //Opens settings page
+        //Opens settings page.
         if (isSettingsOpen || IsMenuOpen.Open) return;
         IsMenuOpen.Open = true;
         isSettingsOpen = true;
@@ -22,7 +22,7 @@ public class SettingsButton : MonoBehaviour
 
     public void CloseSettings()
     {
-        //Closes settings page
+        //Closes settings page.
         if (!isSettingsOpen) return;
         settingsPage.transform.localScaleTransition(Vector3.zero, settingsPageAnimationSpeed);
         StartCoroutine(SetActiveFalse());
@@ -30,7 +30,7 @@ public class SettingsButton : MonoBehaviour
 
     IEnumerator SetActiveFalse()
     {
-        //Delaying cause of the animation of page
+        //Delaying cause of the animation of page.
         yield return new WaitForSeconds(settingsPageAnimationSpeed);
         IsMenuOpen.Open = false;
         settingsPage.SetActive(false);
