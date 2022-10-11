@@ -9,13 +9,21 @@ public class WorkerButton : MonoBehaviour
     public GameObject workerPage;
     public float workerPageAnimationSpeed;
        
-    public void OpenWorkerPage()
+    public void OpenWorkerPage(GameObject buttonObject)
     {
         //Opens settings page
         if (isWorkerPageOpen || IsMenuOpen.Open) return;
-        FindObjectOfType<RefreshWorkerPage>().RefreshWorkers();
         IsMenuOpen.Open = true;
         isWorkerPageOpen = true;
+        buttonObject.transform.localScaleTransition(new Vector3(.7f, .7f, .7f), .2f);
+        StartCoroutine(Animation(buttonObject));
+    }
+
+    private IEnumerator Animation(GameObject g)
+    {
+        yield return new WaitForSeconds(.2f);
+        g.transform.localScaleTransition(Vector3.one, .2f);
+        FindObjectOfType<RefreshWorkerPage>().RefreshWorkers();
         workerPage.SetActive(true);
         workerPage.transform.localScale = Vector3.zero;
         FindObjectOfType<SetClickerActive>().Set(false);
