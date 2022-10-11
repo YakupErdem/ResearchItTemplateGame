@@ -13,7 +13,7 @@ public class WorkerInfoLoader : MonoBehaviour
     public Text researchPerSecond;
     public Text branchText;
     public Branch branch;
-    
+
     [Serializable]
     public enum Branch
     {
@@ -47,5 +47,10 @@ public class WorkerInfoLoader : MonoBehaviour
             moneyPerSecond.text = mnyprscnd.ToString() + "/Money per second";
             researchPerSecond.text = rsrchprscnd.ToString() + "/Research Point per second";
         }
+    }
+
+    public void SellWorker()
+    {
+        FindObjectOfType<WorkerManager>().SellWorker(name.text, gameObject);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,8 +13,8 @@ public class WorkerManager : MonoBehaviour
     public ArrayList workerList;
 
     public bool resetWorkerCount;
-    
-    private void Start()
+
+    private void Awake()
     {
         workerList = new ArrayList();
         if (resetWorkerCount)
@@ -22,17 +23,6 @@ public class WorkerManager : MonoBehaviour
             SaveSystem.SetInt("MaxWorkerCount", 3);
         }
         RefreshWorkerStatics();
-        for (int i = 0; i < workerCount; i++)
-        {
-            foreach (var worker in workers)
-            {
-                if (SaveSystem.GetString("Worker" + (i + 1)) == worker.name)
-                {
-                    workerList.Add(worker);
-                    Debug.Log("Loaded Worker: "+ worker.name);
-                }
-            }
-        }
     }
 
     [Serializable]
@@ -61,8 +51,22 @@ public class WorkerManager : MonoBehaviour
     }
     public void RefreshWorkerStatics()
     {
+        workerList.Clear();
         maxWorkerCount = SaveSystem.GetInt("MaxWorkerCount");
         workerCount = SaveSystem.GetInt("WorkerCount");
+        for (int i = 0; i < workerCount; i++)
+        {
+            foreach (var worker in workers)
+            {
+                if (SaveSystem.GetString("Worker" + (i + 1)) == worker.name)
+                {
+                    workerList.Add(worker);
+                    //Debug.Log("Loaded Worker: "+ worker.name);
+                }
+            }
+        }
+
+        WorkerReload.RefreshPage = true;
     }
 
     public void BuyWorker(string workerName)
@@ -94,7 +98,7 @@ public class WorkerManager : MonoBehaviour
             Debug.Log("Cant Buy More Workers");
             return;
         }
-        foreach (var worker in workers)
+        foreach (Worker worker in workers)
         {
             if (worker.name == workerName)
             {
@@ -108,5 +112,55 @@ public class WorkerManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SellWorker(string workerName, GameObject g)
+    {
+        Worker selledWorker = default;
+        Debug.Log("Worker count: "+workerList.Count);
+        foreach (Worker worker in workerList)
+        {
+            if (workerName == worker.name)
+            {
+                Debug.Log("Set selled worker");
+                selledWorker = worker;
+                break;
+            }
+        }
+
+        if (workerCount < 2)
+        {
+            Worker mSelledWorker = (Worker)workerList[0];
+            decimal mRefund = (decimal)(mSelledWorker.cost * .7f);
+            Destroy(g);
+            Debug.Log("Selled Worker : " + mSelledWorker.name + " For: " + mRefund);
+            goto Skip;
+        }
+        Worker lastWorker = default;
+        foreach (Worker worker in workerList)
+        {
+            if (worker.name == SaveSystem.GetString("Worker" + (workerCount - 1)))
+            {
+                lastWorker = worker;
+                break;
+            }
+        }
+        for (int i = 0; i < workerCount; i++)
+        {
+            Worker worker = (Worker)workerList[i];
+            if (worker.name == selledWorker.name)
+            {
+                workerList[i] = lastWorker;
+                workerList[workerCount - 1] = selledWorker;
+                break;
+            }
+        }
+        decimal refund = (decimal)(selledWorker.cost * .7f);
+        Destroy(g);
+        Debug.Log("Selled Worker : " + selledWorker.name + " For: " + refund);
+        //SaveSystem.SetString("Money", (Convert.ToDecimal(SaveSystem.GetString("Money") + refund)).ToString());
+        Skip:
+        SaveSystem.SetInt("WorkerCount", SaveSystem.GetInt("WorkerCount") - 1);
+        RefreshWorkerStatics();
     }
 }

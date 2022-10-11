@@ -5447,6 +5447,7 @@ GameObject:
   - component: {fileID: 1874408289}
   - component: {fileID: 1874408290}
   - component: {fileID: 1874408291}
+  - component: {fileID: 1874408292}
   m_Layer: 0
   m_Name: WorkerManager
   m_TagString: Untagged
@@ -5519,6 +5520,20 @@ MonoBehaviour:
   workerPage: {fileID: 7265626779183576160, guid: bbf2e2e1b0a6502488e2c2dc9758acb5, type: 3}
   testBranch: 5
   workerCount: 5
+--- !u!114 &1874408292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874408288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be5ea86dfdf96f479188ce36aeb9596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workerPage: {fileID: 7265626779183576160, guid: c9564e405c3340b4e98e4a60bcc1105e, type: 3}
+  parent: {fileID: 1994638143}
 --- !u!1 &1877747717
 GameObject:
   m_ObjectHideFlags: 0

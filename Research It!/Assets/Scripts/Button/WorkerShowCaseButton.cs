@@ -13,10 +13,18 @@ public class WorkerShowCaseButton : MonoBehaviour
         {
             //Opens settings page
             if (isWorkerPageOpen || IsMenuOpen.Open) return;
-            IsMenuOpen.Open = true;
-            isWorkerPageOpen = true;
             workerPage.SetActive(true);
             workerPage.transform.localScale = Vector3.zero;
+            if (WorkerReload.RefreshPage)
+            {
+                foreach (var info in WorkerReload.infos)
+                {
+                    Destroy(info);
+                }
+                FindObjectOfType<WorkerReload>().Refresh();
+            }
+            IsMenuOpen.Open = true;
+            isWorkerPageOpen = true;
             FindObjectOfType<SetClickerActive>().Set(false);
             workerPage.transform.localScaleTransition(Vector3.one, workerPageAnimationSpeed);
         }

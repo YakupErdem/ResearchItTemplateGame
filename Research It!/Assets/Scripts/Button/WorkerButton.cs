@@ -19,6 +19,7 @@ public class WorkerButton : MonoBehaviour
         StartCoroutine(Animation(buttonObject));
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator Animation(GameObject g)
     {
         yield return new WaitForSeconds(.2f);
