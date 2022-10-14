@@ -65,7 +65,13 @@ public class WorkerManager : MonoBehaviour
                 }
             }
         }
-
+        //for test
+        foreach (var worker in workerList)
+        {
+            Worker w = (Worker)worker;
+            Debug.Log("CurrentWorker(s): "+ w.name);
+        }
+        //
         WorkerReload.RefreshPage = true;
     }
 
@@ -127,7 +133,7 @@ public class WorkerManager : MonoBehaviour
                 break;
             }
         }
-
+        //
         if (workerCount < 2)
         {
             Worker mSelledWorker = (Worker)workerList[0];
@@ -136,15 +142,17 @@ public class WorkerManager : MonoBehaviour
             Debug.Log("Selled Worker : " + mSelledWorker.name + " For: " + mRefund);
             goto Skip;
         }
-        Worker lastWorker = default;
-        foreach (Worker worker in workerList)
+        //
+        Worker lastWorker;
+        /*foreach (Worker worker in workerList)
         {
             if (worker.name == SaveSystem.GetString("Worker" + (workerCount - 1)))
             {
                 lastWorker = worker;
                 break;
             }
-        }
+        }*/
+        lastWorker = (Worker)workerList[workerCount - 1];
         for (int i = 0; i < workerCount; i++)
         {
             Worker worker = (Worker)workerList[i];
@@ -152,6 +160,7 @@ public class WorkerManager : MonoBehaviour
             {
                 workerList[i] = lastWorker;
                 workerList[workerCount - 1] = selledWorker;
+                SaveSystem.SetString("Worker"+ (i + 1), lastWorker.name);
                 break;
             }
         }

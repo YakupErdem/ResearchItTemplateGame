@@ -18,6 +18,15 @@ public class LanguageManager : MonoBehaviour
         public Text text;
         public string eng;
         public string tr;
+        public FontSize fontSize;
+    }
+    
+    [Serializable]
+    public struct FontSize
+    {
+        public bool isHaveSpecializedFontSize;
+        public int eng;
+        public int tr;
     }
 
     private void Start()
@@ -36,9 +45,11 @@ public class LanguageManager : MonoBehaviour
             switch (SaveSystem.GetString("Language"))
             {
                 case "Turkish":
+                    if (language.fontSize.isHaveSpecializedFontSize) language.text.fontSize = language.fontSize.tr; 
                     language.text.text = language.tr;
                     break;
                 case "English":
+                    if (language.fontSize.isHaveSpecializedFontSize) language.text.fontSize = language.fontSize.eng; 
                     language.text.text = language.eng;
                     break;
             } 

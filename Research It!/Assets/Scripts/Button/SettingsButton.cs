@@ -15,8 +15,15 @@ public class SettingsButton : MonoBehaviour
         IsMenuOpen.Open = true;
         isSettingsOpen = true;
         settingsPage.SetActive(true);
-        settingsPage.transform.localScale = Vector3.zero;
+        settingsPage.transform.localScale = new Vector3(.6f,.6f,.6f);
         FindObjectOfType<SetClickerActive>().Set(false);
+        settingsPage.transform.localScaleTransition(new Vector3(1.1f,1.1f,1.1f), settingsPageAnimationSpeed);
+        StartCoroutine(Animation());
+    }
+
+    IEnumerator Animation()
+    {
+        yield return new WaitForSeconds(settingsPageAnimationSpeed);
         settingsPage.transform.localScaleTransition(Vector3.one, settingsPageAnimationSpeed);
     }
 
@@ -31,7 +38,7 @@ public class SettingsButton : MonoBehaviour
     IEnumerator SetActiveFalse()
     {
         //Delaying cause of the animation of page.
-        yield return new WaitForSeconds(settingsPageAnimationSpeed);
+        yield return new WaitForSeconds(settingsPageAnimationSpeed / 2.5f);
         IsMenuOpen.Open = false;
         settingsPage.SetActive(false);
         FindObjectOfType<SetClickerActive>().Set(true);

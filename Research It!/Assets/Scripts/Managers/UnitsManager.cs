@@ -20,6 +20,13 @@ public class UnitsManager : MonoBehaviour
         RefreshTexts();
     }
 
+    public void Click()
+    {
+        SaveSystem.SetString("Money", (Convert.ToDecimal(SaveSystem.GetString("Money")) + Convert.ToDecimal(SaveSystem.GetFloat("MoneyPerClick"))).ToString());
+        RefreshTexts();
+    }
+    
+
     public void AddResearchPoints(float amount)
     {
         SaveSystem.SetFloat("ResearchPoint", SaveSystem.GetFloat("ResearchPoint") + amount);
