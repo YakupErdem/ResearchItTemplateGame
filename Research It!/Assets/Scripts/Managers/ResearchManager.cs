@@ -18,11 +18,25 @@ public class ResearchManager : MonoBehaviour
     public struct ResearchPages
     {
         public Sprite image;
-        public string name;
-        public string description;
+        public Name name;
+        public Description description;
         public Branch branch;
         public float moneyCost;
         public float researchCost;
+    }
+    
+    [Serializable]
+    public struct Name
+    {
+        public string eng;
+        public string tr;
+    }
+    
+    [Serializable]
+    public struct Description
+    {
+        public string eng;
+        public string tr;
     }
     
     [Serializable]
@@ -135,8 +149,8 @@ public class ResearchManager : MonoBehaviour
     private void Start()
     {
         addedResearchPages = new List<ResearchPages>();
-        GetNumberOfBranches();
         SetSimilarOnes();
+        GetNumberOfBranches();
         RefreshResearchPage();
     }
     //
@@ -162,6 +176,7 @@ public class ResearchManager : MonoBehaviour
     {
         foreach (var researchPage in researchPages)
         {
+            Debug.Log("Added "+ researchPage.branch + " 1");
             switch (researchPage.branch)
             {
                 case Branch.Space:
@@ -201,34 +216,50 @@ public class ResearchManager : MonoBehaviour
         }
     }
 
+    private int currentTry;
     public void RefreshResearchPage()
     {
         for (int i = 0; i < researchPageCount; i++)
         {
+            currentTry = i;
             if (addedResearchPages.Contains(researchPages[i]))
             {
                 Debug.Log("Retried cause it already contains");
-                i--;
+                retriedCount--;
                 continue;
             }
+            //
+            if (retriedCount + 1 >= researchPageCount)
+            {
+                if (!(addedResearchPages.Count >= researchPageCount))
+                {
+                    i--;
+                }
+            }
+            //
+            Debug.Log("Tried "+(i+1)+" Time(s)");
 //             //
             //
-            Spawn(testBranch);
+            if (researchPages[i].branch != testBranch)
+            {
+                LookSimilarOnes();
+            }
+            else Spawn(researchPages[i].branch);
         }
     }
 
-    private int retriedCount = 0;
+    private int retriedCount;
     private void Spawn(Branch branch)
     {
-        if (retriedCount > researchPageCount)
+        if (addedResearchPages.Count >= researchPageCount)
         {
             Debug.Log("ReachedMax");
             return;
         }
         retriedCount++;
         switch (branch)
-            {
-                case Branch.Space:
+        {
+            case Branch.Space:
                     if (countOfBranches.Space <= 0)
                     {
                         LookSimilarOnes(); return;
@@ -297,21 +328,69 @@ public class ResearchManager : MonoBehaviour
             }
         foreach (var researchPage in researchPages)
         {
+            Debug.Log("Spawned "+ researchPage.branch);
             if (researchPage.branch == branch)
             {
                 var spawnedPage = Instantiate(researchSketch, parentCanvas);
-                spawnedPage.GetComponent<ResearchPageLoader>().Load(researchPage.image,
-                    researchPage.name,researchPage.description,
-                    researchPage.moneyCost,researchPage.researchCost,
-                    researchPage.branch);
+                addedResearchPages.Add(researchPage);
+                switch (SaveSystem.GetString("Language"))
+                {
+                    case "Turkish":
+                        spawnedPage.GetComponent<ResearchPageLoader>().Load(researchPage.image,
+                            researchPage.name.tr,researchPage.description.tr,
+                            researchPage.moneyCost,researchPage.researchCost,
+                            researchPage.branch);
+                        break;
+                    case "English":
+                        spawnedPage.GetComponent<ResearchPageLoader>().Load(researchPage.image,
+                            researchPage.name.eng,researchPage.description.eng,
+                            researchPage.moneyCost,researchPage.researchCost,
+                            researchPage.branch);
+                        break;
+                }
+                return;
+            }
+        }
+    }
+
+    private void Spawn(Branch branch, bool skip)
+    {
+        if (!skip)
+        {
+            Spawn(branch);
+            return;
+        }
+        foreach (var researchPage in researchPages)
+        {
+            if (researchPage.branch == branch)
+            {
+                Debug.Log("Spawned "+ researchPage.branch);
+                var spawnedPage = Instantiate(researchSketch, parentCanvas);
+                addedResearchPages.Add(researchPage);
+                switch (SaveSystem.GetString("Language"))
+                {
+                    case "Turkish":
+                        spawnedPage.GetComponent<ResearchPageLoader>().Load(researchPage.image,
+                            researchPage.name.tr,researchPage.description.tr,
+                            researchPage.moneyCost,researchPage.researchCost,
+                            researchPage.branch);
+                        break;
+                    case "English":
+                        spawnedPage.GetComponent<ResearchPageLoader>().Load(researchPage.image,
+                            researchPage.name.eng,researchPage.description.eng,
+                            researchPage.moneyCost,researchPage.researchCost,
+                            researchPage.branch);
+                        break;
+                }
                 break;
             }
         }
     }
 
+    private int similarCount;
     private void LookSimilarOnes()
     {
-        Debug.Log("Looking to similar ones");
+        Debug.Log("Looking to similar ones "+ similarCount);
         //
         switch (testBranch)
             {
@@ -322,7 +401,14 @@ public class ResearchManager : MonoBehaviour
                     Spawn(similarBranches.QuantumPhysics[Random.Range(0, similarBranches.QuantumPhysics.Count)]);
                     break;
                 case Branch.Physics:
+                    if (similarBranches.Physics.Contains(researchPages[currentTry].branch))
+                    {
+                        Spawn(researchPages[currentTry].branch, true);
+                    }
+                    /*
                     Spawn(similarBranches.Physics[Random.Range(0, similarBranches.Physics.Count)]);
+                    if (similarCount >= similarBranches.Physics.Count) similarCount = 0;
+                    Spawn(similarBranches.Physics[similarCount], true);*/
                     break;
                 case Branch.Philosophy:
                     Spawn(similarBranches.Philosophy[Random.Range(0, similarBranches.Philosophy.Count)]);
@@ -349,5 +435,6 @@ public class ResearchManager : MonoBehaviour
                     Spawn(similarBranches.Electricity[Random.Range(0, similarBranches.Electricity.Count)]);
                     break;
             }
+        similarCount++;
     }
 }
