@@ -15,6 +15,7 @@ public class WorkerShowCaseButton : MonoBehaviour
             if (isWorkerPageOpen || IsMenuOpen.Open) return;
             workerPage.SetActive(true);
             workerPage.transform.localScale = Vector3.zero;
+            //
             if (WorkerReload.RefreshPage)
             {
                 foreach (var info in WorkerReload.infos)
