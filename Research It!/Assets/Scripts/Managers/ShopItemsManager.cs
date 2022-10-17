@@ -9,6 +9,7 @@ public class ShopItemsManager : MonoBehaviour
     public int itemRefreshCount;
     public Transform parentCanvas;
     public GameObject shopSketch;
+    public bool reset;
 
     [Serializable]
     public struct ShopItems
@@ -52,8 +53,17 @@ public class ShopItemsManager : MonoBehaviour
 
     private void Start()
     {
+        if (reset)
+        {
+            SaveSystem.SetInt("OwnItemCount", 0);
+            for (int i = 0; i < 2; i++)
+            {
+                SaveSystem.SetInt("Item", 0);
+            } 
+        }
         _spawnedPages = new Dictionary<int, GameObject>();
         _ownItems = new Dictionary<int, ShopItems>();
+        RefreshOwnItems();
         RefreshPages();
     }
 
@@ -64,6 +74,10 @@ public class ShopItemsManager : MonoBehaviour
     {
         foreach (var shopItem in shopItems)
         {
+            if (_ownItems.ContainsKey(shopItem.id))
+            {
+                continue;
+            }
             var spawnedPage = Instantiate(shopSketch, parentCanvas);
             _spawnedPages.Add(shopItem.id, spawnedPage);
             parentCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(
@@ -114,7 +128,10 @@ public class ShopItemsManager : MonoBehaviour
             {
                 if (shopItem.id == SaveSystem.GetInt("Item" + (i+1)))
                 {
-                    _ownItems.Add(shopItem.id,shopItem);
+                    if (!_ownItems.ContainsKey(shopItem.id))
+                    {
+                        _ownItems.Add(shopItem.id,shopItem);
+                    }
                 }
             }
         }

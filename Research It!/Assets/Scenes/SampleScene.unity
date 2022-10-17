@@ -6799,6 +6799,7 @@ MonoBehaviour:
   itemRefreshCount: 2
   parentCanvas: {fileID: 1512528249}
   shopSketch: {fileID: 7265626779183576160, guid: 2a2a7f08c50786d4783a50c616bf0f25, type: 3}
+  reset: 0
 --- !u!1 &1580392739
 GameObject:
   m_ObjectHideFlags: 0
