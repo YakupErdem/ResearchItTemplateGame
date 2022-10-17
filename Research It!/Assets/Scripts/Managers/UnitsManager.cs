@@ -9,6 +9,20 @@ public class UnitsManager : MonoBehaviour
 {
     public Text moneyText, researchText, investText;
 
+
+    private void Awake()
+    {
+        MoneyNullToZero();
+    }
+
+    //Sıfırlayıcı Fonksiyon
+    private void MoneyNullToZero()
+    {
+        if (SaveSystem.GetString("Money") == String.Empty)
+        {
+            SaveSystem.SetString("Money", "0");
+        }
+    }
     private void Start()
     {
         RefreshTexts();
@@ -39,4 +53,7 @@ public class UnitsManager : MonoBehaviour
         researchText.text = SaveSystem.GetFloat("ResearchPoint").ToString();
         investText.text = SaveSystem.GetFloat("Invest").ToString() + "/s";
     }
+    
+    
 }
+

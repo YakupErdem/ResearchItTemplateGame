@@ -13,6 +13,7 @@ public class WorkerButton : MonoBehaviour
     {
         //Opens settings page
         FindObjectOfType<ButtonManager>().Open(workerPage, workerPageAnimationSpeed);
+        FindObjectOfType<RefreshWorkerPage>().RefreshWorkers();
         /*
         if (isWorkerPageOpen || IsMenuOpen.Open) return;
         IsMenuOpen.Open = true;
@@ -26,7 +27,7 @@ public class WorkerButton : MonoBehaviour
     {
         yield return new WaitForSeconds(.2f);
         g.transform.localScaleTransition(Vector3.one, .2f);
-        FindObjectOfType<RefreshWorkerPage>().RefreshWorkers();
+        
         
         /*workerPage.SetActive(true);
         workerPage.transform.localScale = Vector3.zero;
