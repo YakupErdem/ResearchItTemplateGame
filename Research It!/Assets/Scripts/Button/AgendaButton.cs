@@ -12,21 +12,24 @@ public class AgendaButton : MonoBehaviour
        public void OpenAgenda()
        {
            //Opens settings page
-           if (isAgendaOpen || IsMenuOpen.Open) return;
+           FindObjectOfType<ButtonManager>().Open(agendaPage, agendaPageAnimationSpeed);
+           /*if (isAgendaOpen || IsMenuOpen.Open) return;
            IsMenuOpen.Open = true;
            isAgendaOpen = true;
            agendaPage.SetActive(true);
            agendaPage.transform.localScale = Vector3.zero;
            FindObjectOfType<SetClickerActive>().Set(false);
-           agendaPage.transform.localScaleTransition(Vector3.one, agendaPageAnimationSpeed);
+           agendaPage.transform.localScaleTransition(Vector3.one, agendaPageAnimationSpeed);*/
        }
    
        public void CloseAgenda()
        {
            //Closes settings page
+           FindObjectOfType<ButtonManager>().Close(agendaPage, agendaPageAnimationSpeed);
+           /*
            if (!isAgendaOpen) return;
            agendaPage.transform.localScaleTransition(Vector3.zero, agendaPageAnimationSpeed);
-           StartCoroutine(SetActiveFalse());
+           StartCoroutine(SetActiveFalse());*/
        }
    
        IEnumerator SetActiveFalse()

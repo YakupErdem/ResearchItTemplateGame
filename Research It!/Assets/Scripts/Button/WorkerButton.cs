@@ -12,11 +12,13 @@ public class WorkerButton : MonoBehaviour
     public void OpenWorkerPage(GameObject buttonObject)
     {
         //Opens settings page
+        FindObjectOfType<ButtonManager>().Open(workerPage, workerPageAnimationSpeed);
+        /*
         if (isWorkerPageOpen || IsMenuOpen.Open) return;
         IsMenuOpen.Open = true;
         isWorkerPageOpen = true;
         buttonObject.transform.localScaleTransition(new Vector3(.7f, .7f, .7f), .2f);
-        StartCoroutine(Animation(buttonObject));
+        StartCoroutine(Animation(buttonObject));*/
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -25,18 +27,20 @@ public class WorkerButton : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         g.transform.localScaleTransition(Vector3.one, .2f);
         FindObjectOfType<RefreshWorkerPage>().RefreshWorkers();
-        workerPage.SetActive(true);
+        
+        /*workerPage.SetActive(true);
         workerPage.transform.localScale = Vector3.zero;
         FindObjectOfType<SetClickerActive>().Set(false);
-        workerPage.transform.localScaleTransition(Vector3.one, workerPageAnimationSpeed);
+        workerPage.transform.localScaleTransition(Vector3.one, workerPageAnimationSpeed);*/
     }
    
     public void CloseWorkerPage()
     {
         //Closes settings page
-        if (!isWorkerPageOpen) return;
+        FindObjectOfType<ButtonManager>().Close(workerPage, workerPageAnimationSpeed);
+        /*if (!isWorkerPageOpen) return;
         workerPage.transform.localScaleTransition(Vector3.zero, workerPageAnimationSpeed);
-        StartCoroutine(SetActiveFalse());
+        StartCoroutine(SetActiveFalse());*/
     }
    
     IEnumerator SetActiveFalse()

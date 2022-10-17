@@ -12,21 +12,25 @@ public class ResearchPageButton : MonoBehaviour
        public void OpenResearch()
        {
            //Opens settings page
+           FindObjectOfType<ButtonManager>().Open(researchPage, researchPageAnimationSpeed);
+           /*
            if (isResearchPageOpen || IsMenuOpen.Open) return;
            IsMenuOpen.Open = true;
            isResearchPageOpen = true;
            researchPage.SetActive(true);
            researchPage.transform.localScale = Vector3.zero;
            FindObjectOfType<SetClickerActive>().Set(false);
-           researchPage.transform.localScaleTransition(Vector3.one, researchPageAnimationSpeed);
+           researchPage.transform.localScaleTransition(Vector3.one, researchPageAnimationSpeed);*/
        }
    
        public void CloseResearch()
        {
            //Closes settings page
+           FindObjectOfType<ButtonManager>().Close(researchPage, researchPageAnimationSpeed);
+           /*
            if (!isResearchPageOpen) return;
            researchPage.transform.localScaleTransition(Vector3.zero, researchPageAnimationSpeed);
-           StartCoroutine(SetActiveFalse());
+           StartCoroutine(SetActiveFalse());*/
        }
    
        IEnumerator SetActiveFalse()

@@ -11,6 +11,9 @@ public class SettingsButton : MonoBehaviour
     public void OpenSettings()
     {
         //Opens settings page.
+        FindObjectOfType<ButtonManager>().Open(settingsPage, settingsPageAnimationSpeed);
+
+        /*
         if (isSettingsOpen || IsMenuOpen.Open) return;
         IsMenuOpen.Open = true;
         isSettingsOpen = true;
@@ -18,7 +21,7 @@ public class SettingsButton : MonoBehaviour
         settingsPage.transform.localScale = new Vector3(.6f,.6f,.6f);
         FindObjectOfType<SetClickerActive>().Set(false);
         settingsPage.transform.localScaleTransition(new Vector3(1.1f,1.1f,1.1f), settingsPageAnimationSpeed);
-        StartCoroutine(Animation());
+        StartCoroutine(Animation());*/
     }
 
     IEnumerator Animation()
@@ -30,9 +33,11 @@ public class SettingsButton : MonoBehaviour
     public void CloseSettings()
     {
         //Closes settings page.
+        FindObjectOfType<ButtonManager>().Close(settingsPage, settingsPageAnimationSpeed);
+        /*
         if (!isSettingsOpen) return;
         settingsPage.transform.localScaleTransition(Vector3.zero, settingsPageAnimationSpeed);
-        StartCoroutine(SetActiveFalse());
+        StartCoroutine(SetActiveFalse());*/
     }
 
     IEnumerator SetActiveFalse()

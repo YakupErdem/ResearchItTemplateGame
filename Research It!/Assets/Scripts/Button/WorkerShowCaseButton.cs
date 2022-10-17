@@ -12,10 +12,6 @@ public class WorkerShowCaseButton : MonoBehaviour
         public void OpenWorkerPage()
         {
             //Opens settings page
-            if (isWorkerPageOpen || IsMenuOpen.Open) return;
-            workerPage.SetActive(true);
-            workerPage.transform.localScale = Vector3.zero;
-            //
             if (WorkerReload.RefreshPage)
             {
                 foreach (var info in WorkerReload.infos)
@@ -24,18 +20,27 @@ public class WorkerShowCaseButton : MonoBehaviour
                 }
                 FindObjectOfType<WorkerReload>().Refresh();
             }
+            FindObjectOfType<ButtonManager>().Open(workerPage, workerPageAnimationSpeed);
+            /*
+            if (isWorkerPageOpen || IsMenuOpen.Open) return;
+            workerPage.SetActive(true);
+            workerPage.transform.localScale = Vector3.zero;
+            //
+            
             IsMenuOpen.Open = true;
             isWorkerPageOpen = true;
             FindObjectOfType<SetClickerActive>().Set(false);
-            workerPage.transform.localScaleTransition(Vector3.one, workerPageAnimationSpeed);
+            workerPage.transform.localScaleTransition(Vector3.one, workerPageAnimationSpeed);*/
         }
        
         public void CloseWorkerPage()
         {
             //Closes settings page
+            FindObjectOfType<ButtonManager>().Close(workerPage, workerPageAnimationSpeed);
+            /*
             if (!isWorkerPageOpen) return;
             workerPage.transform.localScaleTransition(Vector3.zero, workerPageAnimationSpeed);
-            StartCoroutine(SetActiveFalse());
+            StartCoroutine(SetActiveFalse());               */
         }
        
         IEnumerator SetActiveFalse()

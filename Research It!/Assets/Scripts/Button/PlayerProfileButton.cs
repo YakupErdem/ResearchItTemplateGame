@@ -12,21 +12,24 @@ public class PlayerProfileButton : MonoBehaviour
            public void OpenProfilePage()
            {
                //Opens settings page
-               if (isProfilePageOpen || IsMenuOpen.Open) return;
+               FindObjectOfType<ButtonManager>().Open(profilePage, profilePageAnimationSpeed);
+               /*if (isProfilePageOpen || IsMenuOpen.Open) return;
                IsMenuOpen.Open = true;
                isProfilePageOpen = true;
                profilePage.SetActive(true);
                profilePage.transform.localScale = Vector3.zero;
                FindObjectOfType<SetClickerActive>().Set(false);
-               profilePage.transform.localScaleTransition(Vector3.one, profilePageAnimationSpeed);
+               profilePage.transform.localScaleTransition(Vector3.one, profilePageAnimationSpeed);*/
            }
        
            public void CloseProfilePage()
            {
                //Closes settings page
+               FindObjectOfType<ButtonManager>().Close(profilePage, profilePageAnimationSpeed);
+               /*
                if (!isProfilePageOpen) return;
                profilePage.transform.localScaleTransition(Vector3.zero, profilePageAnimationSpeed);
-               StartCoroutine(SetActiveFalse());
+               StartCoroutine(SetActiveFalse());*/
            }
        
            IEnumerator SetActiveFalse()
