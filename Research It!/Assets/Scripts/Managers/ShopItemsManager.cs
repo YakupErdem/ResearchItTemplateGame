@@ -62,19 +62,20 @@ public class ShopItemsManager : MonoBehaviour
             } 
         }
         _spawnedPages = new Dictionary<int, GameObject>();
-        _ownItems = new Dictionary<int, ShopItems>();
+        OwnItems = new Dictionary<int, ShopItems>();
         RefreshOwnItems();
         RefreshPages();
+        FindObjectOfType<ShopItemRefresher>().RefreshItems();
     }
 
     private Dictionary<int, GameObject> _spawnedPages;
-    private Dictionary<int, ShopItems> _ownItems;
+    public Dictionary<int, ShopItems> OwnItems;
 
     public void RefreshPages()
     {
         foreach (var shopItem in shopItems)
         {
-            if (_ownItems.ContainsKey(shopItem.id))
+            if (OwnItems.ContainsKey(shopItem.id))
             {
                 continue;
             }
@@ -128,9 +129,9 @@ public class ShopItemsManager : MonoBehaviour
             {
                 if (shopItem.id == SaveSystem.GetInt("Item" + (i+1)))
                 {
-                    if (!_ownItems.ContainsKey(shopItem.id))
+                    if (!OwnItems.ContainsKey(shopItem.id))
                     {
-                        _ownItems.Add(shopItem.id,shopItem);
+                        OwnItems.Add(shopItem.id,shopItem);
                     }
                 }
             }
