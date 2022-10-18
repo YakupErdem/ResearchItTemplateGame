@@ -14,7 +14,12 @@ public class ResearchManager : MonoBehaviour
 
     //
     public float researchPageCount;
+
     public Branch testBranch;
+
+    //
+    public static int CurrentResearch;
+    public static int CurrentResearchCost;
 
     [Serializable]
     public struct ResearchPages
@@ -25,6 +30,7 @@ public class ResearchManager : MonoBehaviour
         public Branch branch;
         public float moneyCost;
         public float researchCost;
+        public int id;
     }
 
     [Serializable]
@@ -160,10 +166,27 @@ public class ResearchManager : MonoBehaviour
 
     private void Start()
     {
+        CheckIfHaveResearch();
         SetSimilarOnes();
         GetNumberOfBranches();
         RefreshResearchPage();
         SpawnPages();
+    }
+    //
+
+    private void CheckIfHaveResearch()
+    {
+        foreach (var researchPage in researchPages)
+        {
+            if (researchPage.id == SaveSystem.GetInt("CurrentResearch"))
+            {
+                Debug.Log("CurrentResearch = " + researchPage.id);
+                CurrentResearch = researchPage.id;
+                CurrentResearchCost = Convert.ToInt16(researchPage.researchCost);
+                FindObjectOfType<ResearchPoints>().StartResearch();
+            }
+        }
+        //
     }
 
     //
@@ -411,9 +434,22 @@ public class ResearchManager : MonoBehaviour
         similarCount++;
     }
 
+    private Dictionary<int, GameObject> spawnedPages;
+
     private void SpawnPages()
     {
         List<ResearchPages> sameBranches = new List<ResearchPages>();
+
+        ResearchPages currentResearch = default;
+        foreach (var researchPage in addedResearchPages)
+        {
+            if (researchPage.id == CurrentResearch)
+            {
+                currentResearch = researchPage;
+            }
+        }
+        addedResearchPages.Remove(currentResearch);
+        //
         foreach (var researchPage in addedResearchPages)
         {
             if (researchPage.branch == testBranch)
@@ -421,6 +457,7 @@ public class ResearchManager : MonoBehaviour
                 sameBranches.Add(researchPage);
             }
         }
+
         //
         if (sameBranches.Count > 0)
         {
@@ -429,6 +466,7 @@ public class ResearchManager : MonoBehaviour
                 SpawnPage(sameBranch);
             }
         }
+
         //
         foreach (var researchPage in addedResearchPages)
         {
@@ -439,9 +477,12 @@ public class ResearchManager : MonoBehaviour
         }
     }
 
+    public Dictionary<int, GameObject> spawnedObjects = new();
+
     private void SpawnPage(ResearchPages researchPage)
     {
         var spawnedPage = Instantiate(researchSketch, parentCanvas);
+        spawnedObjects.Add(researchPage.id, spawnedPage);
         parentCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(
             parentCanvas.GetComponent<RectTransform>().sizeDelta.x,
             parentCanvas.GetComponent<RectTransform>().sizeDelta.y + 463.2646f);
@@ -451,15 +492,39 @@ public class ResearchManager : MonoBehaviour
                 spawnedPage.GetComponent<ResearchPageLoader>().Load(researchPage.image,
                     researchPage.name.tr, researchPage.description.tr,
                     researchPage.moneyCost, researchPage.researchCost,
-                    researchPage.branch);
+                    researchPage.branch, researchPage.id);
                 break;
             case "English":
                 spawnedPage.GetComponent<ResearchPageLoader>().Load(researchPage.image,
                     researchPage.name.eng, researchPage.description.eng,
                     researchPage.moneyCost, researchPage.researchCost,
-                    researchPage.branch);
+                    researchPage.branch, researchPage.id);
                 break;
         }
+    }
+
+    public void StartResearch(int id)
+    {
+        ResearchPages startedResearch = default;
+        //
+        foreach (var researchPage in researchPages)
+        {
+            if (researchPage.id == id)
+            {
+                startedResearch = researchPage;
+            }
+        }
+        //
+        if (Convert.ToDecimal(SaveSystem.GetString("Money")) < Convert.ToDecimal(startedResearch.moneyCost))
+        {
+              Debug.Log("Not Enough Money For Researching");
+              return;
+        }
+        //
+        SaveSystem.SetInt("CurrentResearch", id);
+        Destroy(spawnedObjects[id]);
+        FindObjectOfType<ResearchPoints>().StartResearch();
+        Debug.Log("Started Research ID: " + id);
     }
 }
 /*switch (branch)

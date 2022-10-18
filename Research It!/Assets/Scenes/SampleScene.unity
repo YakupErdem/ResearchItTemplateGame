@@ -1706,7 +1706,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1912439212}
         m_TargetAssemblyTypeName: PlayerProfileManager, Assembly-CSharp
         m_MethodName: UpdateMoneyPerClick
         m_Mode: 4
@@ -2313,7 +2313,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1912439212}
         m_TargetAssemblyTypeName: PlayerProfileManager, Assembly-CSharp
         m_MethodName: UpdateResearchPerSecond
         m_Mode: 4
@@ -4286,6 +4286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1019338180}
   - component: {fileID: 1019338181}
+  - component: {fileID: 1019338182}
   m_Layer: 0
   m_Name: ResearchPageManager
   m_TagString: Untagged
@@ -4330,7 +4331,8 @@ MonoBehaviour:
       tr: "Kara delikler g\xFCzeldir"
     branch: 1
     moneyCost: 500
-    researchCost: 1000
+    researchCost: 20
+    id: 1
   - image: {fileID: 21300000, guid: a16ca1f1f1a09bd469e8e2311cf7a7f9, type: 3}
     name:
       eng: String Theory2
@@ -4340,7 +4342,8 @@ MonoBehaviour:
       tr: "Sicim teorisi g\xFCzel bir teori4"
     branch: 0
     moneyCost: 500
-    researchCost: 1000
+    researchCost: 30
+    id: 2
   - image: {fileID: 21300000, guid: e6d32481d2173354da284f4cd8771a85, type: 3}
     name:
       eng: String Theory
@@ -4350,11 +4353,25 @@ MonoBehaviour:
       tr: "Sicim teorisi g\xFCzel bir teori"
     branch: 2
     moneyCost: 500
-    researchCost: 1000
+    researchCost: 5
+    id: 3
   researchSketch: {fileID: 7265626779183576160, guid: d5db35c66e1bf7d45931ee937788ed71, type: 3}
   parentCanvas: {fileID: 540372248}
   researchPageCount: 3
   testBranch: 0
+--- !u!114 &1019338182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019338179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce98072d984b084bbba9342d893c75d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  researchPointGain: 0
 --- !u!1 &1058011634
 GameObject:
   m_ObjectHideFlags: 0

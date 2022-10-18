@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &867763856410309638
 RectTransform:
   m_ObjectHideFlags: 0
@@ -203,9 +203,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WorkerPageLoader, Assembly-CSharp
-        m_MethodName: BuyThisWorker
+      - m_Target: {fileID: 4275447801488747398}
+        m_TargetAssemblyTypeName: ResearchPageLoader, Assembly-CSharp
+        m_MethodName: StartResearch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
