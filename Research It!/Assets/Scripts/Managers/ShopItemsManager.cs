@@ -117,6 +117,7 @@ public class ShopItemsManager : MonoBehaviour
         //
         SaveSystem.SetInt("OwnItemCount", SaveSystem.GetInt("OwnItemCount") + 1);
         SaveSystem.SetInt("Item" + SaveSystem.GetInt("OwnItemCount").ToString(), id);
+        FindObjectOfType<ShopItemRefresher>().RefreshItems();
         Debug.Log("Succesfully Purchased Item id: " + id);
         Destroy(_spawnedPages[id]);
     }

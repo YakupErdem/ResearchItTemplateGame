@@ -6,6 +6,11 @@ using Random = UnityEngine.Random;
 public class ResearchManager : MonoBehaviour
 {
     public ResearchPages[] researchPages;
+    //
+
+    public ResearchMagazine[] researchMagazines;
+    public Transform parentMagazineCanvas;
+    public GameObject magazineSketch;
 
     //
     public GameObject researchSketch;
@@ -20,6 +25,16 @@ public class ResearchManager : MonoBehaviour
     //
     public static int CurrentResearch;
     public static int CurrentResearchCost;
+    
+    
+    [Serializable]
+    public struct ResearchMagazine
+    {
+        public Sprite image;
+        public Name Name;
+        public Description description;
+        public int id;
+    }
 
     [Serializable]
     public struct ResearchPages

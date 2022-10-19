@@ -4355,6 +4355,33 @@ MonoBehaviour:
     moneyCost: 500
     researchCost: 5
     id: 3
+  researchMagazines:
+  - image: {fileID: 21300000, guid: e1f316fafe707f64d80ec3e392e8f665, type: 3}
+    Name:
+      eng: Black Holes
+      tr: Kara Delikler
+    description:
+      eng: '|name| just founded insane things!'
+      tr: "|name| \xE7ok iyi bir bulu\u015F yapt\u0131!"
+    id: 1
+  - image: {fileID: 21300000, guid: a16ca1f1f1a09bd469e8e2311cf7a7f9, type: 3}
+    Name:
+      eng: String theory
+      tr: Sicim Teorisi
+    description:
+      eng: '|name| just founded insane things!'
+      tr: "|name| \xE7ok iyi bir bulu\u015F yapt\u0131!"
+    id: 2
+  - image: {fileID: 21300000, guid: e6d32481d2173354da284f4cd8771a85, type: 3}
+    Name:
+      eng: General Relativity
+      tr: "Genel G\xF6relilik"
+    description:
+      eng: '|name| just founded insane things!'
+      tr: "|name| \xE7ok iyi bir bulu\u015F yapt\u0131!"
+    id: 3
+  parentMagazineCanvas: {fileID: 496936819}
+  magazineSketch: {fileID: 7265626779183576160, guid: 4500726d40d0dbf41b888e69705d4ec8, type: 3}
   researchSketch: {fileID: 7265626779183576160, guid: d5db35c66e1bf7d45931ee937788ed71, type: 3}
   parentCanvas: {fileID: 540372248}
   researchPageCount: 3
