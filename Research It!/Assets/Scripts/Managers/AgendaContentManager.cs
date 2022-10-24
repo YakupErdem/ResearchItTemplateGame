@@ -12,12 +12,19 @@ public class AgendaContentManager : MonoBehaviour
     public GameObject contentObject, contentArgumentObject;
     public bool test;
     public bool testArgument;
+    public Type testBranch;
+    public float refreshCount;
 
     public static int ContentCount;
 
     private void Awake()
     {
         ContentCount = 0;
+    }
+
+    private void Start()
+    {
+        RefreshAgendaContents();
     }
 
     [Serializable]
@@ -29,7 +36,7 @@ public class AgendaContentManager : MonoBehaviour
         public ContentDesc contentDescription;
         public Type type;
     }
-    
+
     [Serializable]
     public struct ContentArgument
     {
@@ -53,14 +60,14 @@ public class AgendaContentManager : MonoBehaviour
         Evolution,
         Electricity
     }
-    
+
     [Serializable]
     public struct ContentName
     {
         public string eng;
         public string tr;
     }
-    
+
     [Serializable]
     public struct ContentDesc
     {
@@ -80,13 +87,16 @@ public class AgendaContentManager : MonoBehaviour
             switch (SaveSystem.GetString("Language"))
             {
                 case "English":
-                        spawnedObject.GetComponent<ContentLoad>().Load(content.contentImage, content.contentName.eng, content.contentDescription.eng, content.by);
+                    spawnedObject.GetComponent<ContentLoad>().Load(content.contentImage, content.contentName.eng,
+                        content.contentDescription.eng, content.by);
                     break;
                 case "Turkish":
-                        spawnedObject.GetComponent<ContentLoad>().Load(content.contentImage, content.contentName.tr, content.contentDescription.tr, content.by);
+                    spawnedObject.GetComponent<ContentLoad>().Load(content.contentImage, content.contentName.tr,
+                        content.contentDescription.tr, content.by);
                     break;
             }
         }
+
         if (testArgument)
         {
             testArgument = false;
@@ -96,10 +106,79 @@ public class AgendaContentManager : MonoBehaviour
             switch (SaveSystem.GetString("Language"))
             {
                 case "English":
-                    spawnedObject.GetComponent<ContentArgumentLoad>().LoadArgument(content.name, content.name2, content.contentArgument.eng);
+                    spawnedObject.GetComponent<ContentArgumentLoad>()
+                        .LoadArgument(content.name, content.name2, content.contentArgument.eng);
                     break;
                 case "Turkish":
-                    spawnedObject.GetComponent<ContentArgumentLoad>().LoadArgument(content.name, content.name2, content.contentArgument.tr);
+                    spawnedObject.GetComponent<ContentArgumentLoad>()
+                        .LoadArgument(content.name, content.name2, content.contentArgument.tr);
+                    break;
+            }
+        }
+    }
+
+    public void RefreshAgendaContents()
+    {
+        List<Content> sameBranch = new();
+        List<Content> nonSameBranch = new();
+        List<Content> spawnWithRandomQueue = new();
+//
+        foreach (var content in contents)
+        {
+            if (content.type == testBranch)
+            {
+                sameBranch.Add(content);
+            }
+            else
+            {
+                nonSameBranch.Add(content);
+            }
+        }
+//
+        for (int i = 0; i < refreshCount; i++)
+        {
+            if (sameBranch.Count > i)
+            {
+                T:
+                //Debug.Log("Trying To Spawn Agenda With SameBranch");
+                int randomNumber = Random.Range(0, sameBranch.Count);
+                if (!spawnWithRandomQueue.Contains(sameBranch[randomNumber]))
+                {
+                    spawnWithRandomQueue.Add(sameBranch[randomNumber]);
+                }
+                else goto T;
+            }
+            else
+            {
+                T:
+                //Debug.Log("Trying To Spawn Agenda With NonSameBranch");
+                int randomNumber = Random.Range(0, nonSameBranch.Count);
+                if (!spawnWithRandomQueue.Contains(nonSameBranch[randomNumber]))
+                {
+                    spawnWithRandomQueue.Add(nonSameBranch[randomNumber]);
+                }
+                else goto T;
+            }
+        }
+//
+        Spawn(spawnWithRandomQueue);
+    }
+
+    private void Spawn(List<Content> contents)
+    {
+        foreach (var content in contents)
+        {
+            var spawnedObject = Instantiate(contentObject, contentPanel);
+            FindObjectOfType<ContentPageSizer>().Resize();
+            switch (SaveSystem.GetString("Language"))
+            {
+                case "English":
+                    spawnedObject.GetComponent<ContentLoad>()
+                        .Load(content.contentImage, content.contentName.eng, content.contentDescription.eng, content.by);
+                    break;
+                case "Turkish":
+                    spawnedObject.GetComponent<ContentLoad>()
+                        .Load(content.contentImage, content.contentName.tr, content.contentDescription.tr, content.by);
                     break;
             }
         }

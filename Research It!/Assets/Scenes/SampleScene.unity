@@ -1832,6 +1832,7 @@ GameObject:
   - component: {fileID: 476420295}
   - component: {fileID: 476420294}
   - component: {fileID: 476420293}
+  - component: {fileID: 476420297}
   m_Layer: 5
   m_Name: AgendaCanvas
   m_TagString: Untagged
@@ -1921,6 +1922,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &476420297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476420291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbaa71d2dea1a0d448a4b89b02424d25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizeMultiplier: 72.41
+  main: {fileID: 496936818}
 --- !u!1 &496936818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +1946,6 @@ GameObject:
   m_Component:
   - component: {fileID: 496936819}
   - component: {fileID: 496936820}
-  - component: {fileID: 496936821}
   m_Layer: 5
   m_Name: ContentPanel
   m_TagString: Untagged
@@ -1985,19 +1999,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &496936821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 496936818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbaa71d2dea1a0d448a4b89b02424d25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sizeMultiplier: 72.41
 --- !u!1 &503748446
 GameObject:
   m_ObjectHideFlags: 0
@@ -4475,7 +4476,7 @@ MonoBehaviour:
         veya ger\xE7ekle\u015Fmeyebilecek rastgele bir atom alt\u0131 olaya ba\u011Fl\u0131
         olmas\u0131n\u0131n bir sonucu olarak ayn\u0131 anda hem canl\u0131 hem de
         \xF6l\xFC olarak kabul edilebilir."
-    type: 1
+    type: 0
   - contentImage: {fileID: 21300000, guid: e6d32481d2173354da284f4cd8771a85, type: 3}
     by: Albert Einstein
     contentName:
@@ -4521,6 +4522,8 @@ MonoBehaviour:
   contentArgumentObject: {fileID: 7265626779183576160, guid: 200b59a53934b154a94f97e35669681b, type: 3}
   test: 0
   testArgument: 0
+  testBranch: 0
+  refreshCount: 4
 --- !u!1 &1148458816
 GameObject:
   m_ObjectHideFlags: 0

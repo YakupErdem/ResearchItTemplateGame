@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ContentPageSizer : MonoBehaviour
 {
-    public float sizeMultiplier;
+    public GameObject main;
 
     public void Resize()
     {
-        GetComponent<RectTransform>().sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x,
-            GetComponent<RectTransform>().sizeDelta.y + 390.8546f + sizeMultiplier);
+        main.GetComponent<RectTransform>().sizeDelta = new Vector2(main.GetComponent<RectTransform>().sizeDelta.x,
+            main.GetComponent<RectTransform>().sizeDelta.y + 519.2646f);
     }
 }

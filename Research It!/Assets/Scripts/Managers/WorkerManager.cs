@@ -72,6 +72,7 @@ public class WorkerManager : MonoBehaviour
             Debug.Log("CurrentWorker(s): "+ w.name);
         }
         //
+        FindObjectOfType<UnitsManager>().RefreshWorkerGains();
         WorkerReload.RefreshPage = true;
     }
 

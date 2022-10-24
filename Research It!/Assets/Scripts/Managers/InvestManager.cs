@@ -23,7 +23,7 @@ public class InvestManager : MonoBehaviour
         _lastTime = SaveSystem.GetString("lastTime");
         CalculateTime();
         Debug.Log("Passed Seconds: " + _passedSeconds);
-        decimal addedMoney = _passedSeconds * Convert.ToDecimal(SaveSystem.GetFloat("Invest"));
+        decimal addedMoney = Convert.ToInt16((_passedSeconds * Convert.ToDecimal(SaveSystem.GetFloat("Invest"))) / 10);
         Debug.Log("Last Money: " + SaveSystem.GetString("Money"));
         //
         SaveSystem.SetString("Money", (Convert.ToDecimal(SaveSystem.GetString("Money")) + addedMoney).ToString());

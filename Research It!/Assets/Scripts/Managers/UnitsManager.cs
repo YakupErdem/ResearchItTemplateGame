@@ -23,8 +23,23 @@ public class UnitsManager : MonoBehaviour
             SaveSystem.SetString("Money", "0");
         }
     }
+    
     private void Start()
     {
+        RefreshWorkerGains();
+        RefreshTexts();
+    }
+
+    public void RefreshWorkerGains()
+    {
+        ArrayList workerList = FindObjectOfType<WorkerManager>().workerList;
+        float workerMoneys = 0;
+        foreach (var workerObject in workerList)
+        {
+            WorkerManager.Worker worker = (WorkerManager.Worker)workerObject;
+            workerMoneys += worker.moneyPerSecond;
+        }
+        SaveSystem.SetFloat("Invest", 1 + workerMoneys);
         RefreshTexts();
     }
 
