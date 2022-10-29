@@ -60,6 +60,7 @@ public class RefreshWorkerPage : MonoBehaviour
                     worker = FindObjectOfType<WorkerManager>().workers[Random.Range(0, FindObjectOfType<WorkerManager>().workers.Length)];
                 }
             }
+            Debug.Log("Spawned Worker = "+ worker.name);
             var spawnedWorkerPage = Instantiate(workerPage, parent);
             spawnedWorkerPage.GetComponent<WorkerPageLoader>().Load(worker.photo, worker.name, worker.cost, worker.moneyPerSecond, worker.researchPointPerSecond, (WorkerPageLoader.Branch)worker.branch);
             parent.GetComponent<RectTransform>().sizeDelta = new Vector2(
